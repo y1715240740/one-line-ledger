@@ -1,0 +1,19 @@
+
+### 测试接收消息
+POST http://127.0.0.1:8080/qq/message
+Content-Type: application/json
+
+{
+  "raw_message": "本地测试",
+  "user_id": 123456
+}
+
+### 直接测 NapCat
+POST http://127.0.0.1:3000/send_msg
+Content-Type: application/json
+
+{
+  "user_id": 1715240740,
+  "message": "NapCat 测试"
+}
+
