@@ -14,7 +14,7 @@ public class OLLController {
         this.messageService = messageService;
     }
     @PostMapping("/message")
-    public void receive(@RequestBody Map<String, Object> event) {
+    public void receive(@RequestBody Map<String, Object> event) {//RequestBody:表示把请求体之中的JSON转化为java对象装在event之中
         messageService.handle(event);   // 自己什么都不干，全交给 Service
     }
 }
