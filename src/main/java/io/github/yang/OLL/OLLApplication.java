@@ -6,9 +6,11 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import io.github.yang.OLL.mapper.BillMapper;
-/**
- * 启动类 引导类
- */
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+/* 启动类 引导类 */
+
+@EnableScheduling
 @MapperScan("io.github.yang.OLL.mapper")
 @SpringBootApplication //标识当前类是一个启动类
 public class OLLApplication {

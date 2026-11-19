@@ -22,20 +22,26 @@ public class BillService {
     public Bill insertFromText(String text, long userId) {
         if (text == null) return null;
 
+        String cleaned = text.replaceAll("\\[CQ:[^\\]]*\\]", "").trim();
+        if (cleaned.isEmpty()) return null;
+
 // 1. 取第一个数字当金额
-        Matcher m = Pattern.compile("(\\d+(\\.\\d+)?)").matcher(text);
+        Matcher m = Pattern.compile("(\\d+(\\.\\d+)?)").matcher(cleaned);
         if (!m.find()) return null;
         BigDecimal amount = new BigDecimal(m.group(1));
 
+        if (amount.compareTo(new BigDecimal("100000")) > 0) return null;
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) return null;
+
 // 2. 猜分类
-        String category = guessCategory(text);
+        String category = guessCategory(cleaned);
 
 // 3. 组装并入库
         Bill bill = new Bill();
         bill.setUserId(userId);
         bill.setAmount(amount);
         bill.setCategory(category);
-        bill.setNote(text);
+        bill.setNote(cleaned);
         bill.setSource("chat");
         bill.setOccurredAt(LocalDateTime.now());
 
