@@ -29,11 +29,11 @@ public class MessageService {
         Object groupIdObj = event.get("group_id");
 
 // 先尝试当账单处理
-        Bill bill = billService.insertFromText(text, userId);
+        Bill bill = billService.insertByAI(text, userId);
         if (bill != null) {
-            String reply = "已记 ¥" + bill.getAmount() + " " + bill.getCategory() +
-                    "\n本月还剩" + budgetService.remaining(userId) +
-                    "元，每日可花" + budgetService.dailyAllowance(userId) + "元";
+            BudgetSummary s = budgetService.getSummary(userId);
+            String reply = "已记 ¥" + bill.getAmount() + "  · " + bill.getCategory()
+                    + "\n今日已花 " + budgetService.dailySpent(userId)  + " 元";
 
             if (groupIdObj != null) {
                 messageSender.sendToGroup(((Number) groupIdObj).longValue(), reply);
