@@ -324,5 +324,16 @@ GET /api/summary?month=2026-11
 - [ ] 统计改成 SQL 聚合（SUM / COUNT），不用全量遍历
 - [ ] 触发器 / 智能反馈（同类 N 次、环比异常）
 - [ ] 用户自定义分类
+- [ ] 支持一句话里的多笔账单（返回数组，循环入库）
 
 ---
+
+## 类清单
+- OLLController：接 NapCat 推来的消息
+- MessageService：判断是不是账单，决定怎么回
+- BillService：解析文本、组装 Bill、入库
+- BudgetService：算本月花费、剩余、日均、周报
+- AiService：调 AI 解析账单
+- MessageSender：统一发消息
+- DailyReportJob：每日 21:30、每周日 20:00 推送
+- BillMapper / BudgetMapper：数据库操作
